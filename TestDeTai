@@ -1,0 +1,94 @@
+#include<iostream>
+#include<string.h>
+#include<malloc.h>
+using namespace std;
+struct SACH	{
+	char MaSSach[10];
+	char TenSach[20];
+	char TacGia[20];
+	int NamXB;
+	int SL;
+};
+struct LIST
+{
+    SACH value;
+    LIST *pointer;
+};
+
+void nhapSach(SACH &a);
+void TaoDS(LIST *&L, int &so);
+void xuatDS(SACH a);
+void xuatDANHSACH(LIST *L);
+int TongSLSach(LIST *L);
+int main()
+{
+	LIST *dx;
+	int n;
+	cout<<"=> Cau 1 : \n";
+	TaoDS(dx,n);
+	xuatDANHSACH(dx);
+	cout<<"=> Cau 3 : \n";
+	cout<<" So Luong cuon sach la : "<<TongSLSach(dx);
+}
+
+void nhapSach(SACH &a)
+{
+	fflush(stdin);
+	cout<<" Nhap Ma so sach  : "; gets(a.MaSSach);
+	cout<<" Nhap ten sach    : "; gets(a.TenSach);
+	cout<<" Nhap Ten tac gia : "; gets(a.TacGia);
+	cout<<" Nhap Nam XB      : "; cin>>a.NamXB;
+	cout<<" Nhap So Luong    : "; cin>>a.SL;
+	cout<<"\n";
+}
+
+void TaoDS(LIST *&L, int &so)
+{
+    LIST *p;
+    int i;
+	SACH x;
+    L = NULL;
+    i = 1;
+    cout<<"Nhap so cuon sach : ";
+    cin>>so;
+    cout << "Nhap thong tin " << so << " cuon sach : \n";
+    while (i <= so)
+    {
+        nhapSach(x);
+        p = (LIST *)malloc(sizeof(LIST));
+        p->value = x;
+        p->pointer = L;
+        L = p;
+        i++;
+    } // end while
+}
+
+void xuatSach(SACH a)
+{
+	cout<<a.MaSSach<<"\t\t"<<a.TacGia<<"\t\t"<<a.NamXB<<"\t"<<a.SL;
+	cout<<"\n";
+}
+
+void xuatDANHSACH(LIST *L)
+{
+	LIST *p;
+    p = L;
+	cout<<"MaSSach\t\tTacGia\t\tNamXB\tSL\n";
+    while (p != NULL)
+    {
+        xuatSach(p->value);
+        p = p->pointer;
+    }
+}
+int TongSLSach(LIST *L)
+{
+	LIST *p;
+    p = L;
+    int tong = 0;
+    while (p != NULL)
+    {
+        tong = tong + p->value.SL;
+        p = p->pointer;
+    }
+    return tong;
+}
